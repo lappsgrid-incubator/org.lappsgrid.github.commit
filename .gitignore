@@ -1,0 +1,7 @@
+target/
+.idea
+*.iml
+*.ipr
+*.iws
+src/main/java/**/Version.java
+VERSION
