@@ -22,10 +22,10 @@ class Tests {
     @Before
     void setup() {
         token = new File('/Users/suderman/.secret/github.token').text
-        hub = new GitHub('lappsgrid-incubator', 'Testing', token)
+        hub = new GitHub('lapps', 'org.lappsgrid.discriminator', token)
         http = new HttpUtils('https://api.github.com', token)
-        http.owner('lappsgrid-incubator')
-        http.repo('Testing')
+        http.owner('lapps')
+        http.repo('org.lappsgrid.discriminator')
 //        github = HttpBuilder.configure {
 //            request.uri = "https://api.github.com"
 //            request.headers.Authorization = "token $token".toString()
@@ -39,6 +39,22 @@ class Tests {
         http = null
     }
 
+    @Test
+    void fixit() {
+        String sha = "7acb40112ccab583bd606076e71b2bc97d199c1c"
+        Map data = [
+                sha: sha,
+                force: true
+        ]
+        http.post('git/refs/heads/vocabulary-20170505-002452', data)
+    }
+
+    @Test
+    void pr() {
+        hub.pullRequest('vocabulary-20170505-002452', 'develop')
+    }
+
+    /*
     @Test
     void testApi() {
         def heads = http.get('git/refs/heads')
@@ -74,6 +90,19 @@ class Tests {
         String s = "refs/heads/vocabulary-20170502-231812"
         println s.tokenize('/')[-1]
     }
+
+    @Test
+    void configTest() {
+        def config = new ConfigSlurper().parse(new File('vocabulary.commit').text)
+        config.keySet().each { String owner ->
+            config[owner].repo.each { repo, files ->
+                files.each { Map map ->
+                    println "Posting ${map.file} to ${repo}:${map.path}"
+                }
+            }
+        }
+    }
+    */
 
     void prettyPrint(Object object) {
         println new JsonBuilder(object).toPrettyString()

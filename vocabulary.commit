@@ -1,0 +1,12 @@
+owner = 'lapps'
+repository = 'org.lappsgrid.vocabulary'
+files = [
+    [
+        file: 'target/Annotations.java',
+        path: 'src/main/java/org/lappsgrid/vocabulary/Annotations.java'
+    ],
+    [
+        file: 'target/Features.java',
+        path: 'src/main/java/org/lappsgrid/vocabulary/Features.java'
+    ]
+]
