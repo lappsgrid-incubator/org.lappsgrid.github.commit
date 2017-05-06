@@ -49,7 +49,6 @@ class GitHub {
     }
 
     public Map pullRequest(String head, String base) {
-        // title head base body maintainer_can_modify
         Map data = [
                 title: 'Vocabulary Update',
                 head: head,
@@ -76,38 +75,7 @@ class GitHub {
         prettyPrint commit
 
         /*
-         * Step 3. POST the file to GitHub.
-         */
-//        println "Posting new file to GitHub"
-//
-//        // The data to be POSTed to GitHub
-//        String java = file.text
-//        def data = [
-//            content: java.bytes.encodeBase64().toString(),
-//            encoding: 'base64'
-//        ]
-//
-//        def blob = github.post("git/blobs", data)
-//        prettyPrint blob
-
-        /*
-         * Step 4. Create a new tree for our file.
-         */
-//        println "Creating a new tree."
-//        def entity = [
-//            base_tree: commit.tree.sha,
-//            tree: [
-//                [
-//                    path: path,
-//                    mode: '100644',
-//                    type: 'blob',
-//                    sha: blob.sha
-//                ]
-//            ]
-//        ]
-
-        /*
-         * Step 3-4:  Send all the files to GitHub as a single commit.
+         * Step 3. POST the file(s) to GitHub.
          */
         Map entity = [
                 base_tree: commit.tree.sha,
@@ -118,16 +86,13 @@ class GitHub {
 
 
         /*
-         * Step 5. Create a new commit containing the tree we just created.
+         * Step 4. Create a new commit containing the tree we just created.
          */
         println "Creating a new commit for ${head.object.sha}"
         Map newCommit = [:]
         newCommit.message = 'New Discriminators after vocabulary build.'
-        println "Set the message"
         newCommit.parents = [ head.object.sha ]
-        println "Set the parents: ${head.object.sha}"
         newCommit.tree = newTree.sha
-        println "Set the tree: ${newTree.sha}"
 
 //        data = [
 //                message: 'New Discriminators after vocabulary build.',
@@ -155,8 +120,7 @@ class GitHub {
     /**
      * Sends a single file to the GitHub repository.
      *
-     * @param file The file to be uploaded
-     * @param path The file's path in the repository
+     * @param commitData a map of containing the file and path
      * @return The tree fragment required when we create a new tree for this file.
      */
     Map send(Map commitData) {

@@ -1,5 +1,6 @@
 owner = 'lapps'
 repository = 'org.lappsgrid.vocabulary'
+base = 'develop'
 files = [
     [
         file: 'target/Annotations.java',
