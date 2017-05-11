@@ -14,6 +14,7 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <build>
+        <finalName>ghc-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.anc.maven.plugins</groupId>
@@ -47,7 +48,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <finalName>ghc</finalName>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
