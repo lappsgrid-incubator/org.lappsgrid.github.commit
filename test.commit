@@ -1,0 +1,19 @@
+owner = 'lappsgrid-incubator'
+repository = 'Testing'
+base = 'master'
+branch = 'testing-' + new Date().format('yyyyMMdd-HHmmss')
+message = 'Test commit from the integration tests.'
+pr {
+    title = 'Integration Test'
+    message = 'This PR should be closed without merging as it was triggered by an integration test in the org.lappsgrid.github.commit project.'
+}
+files = [
+    [
+        file: 'ghc',
+        path: 'src/main/scripts/ghc'
+    ],
+    [
+        file: 'LICENSE',
+        path: 'LICENSE'
+    ]
+]
