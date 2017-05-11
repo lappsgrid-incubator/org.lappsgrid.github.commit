@@ -22,15 +22,12 @@ class Main {
 
     void run(File file, String token) {
         def config = new ConfigSlurper().parse(file.text)
-        if (!config.owner) {
-            println "The repository owner was not specified."
-            return
-        }
         if (!config.repository) {
             println "The repository was not specified."
             return
         }
-        GitHub github = new GitHub(config.owner, config.repository, token)
+        String owner = config.owner ?: 'lapps'
+        GitHub github = new GitHub(owner, config.repository, token)
         String base = config.base ?: 'develop'
         String branch = config.branch ?: 'vocabulary-' + new Date().format('yyyyMMdd-HHmmss')
         String message = config.message ?: 'New Discriminators after vocabulary build.'
