@@ -1,0 +1,22 @@
+/*
+ * Specifies the files to be commited as a PR to the vocabulary-pages
+ * project on GitHub.
+ */
+
+def version = new File('VERSION').text
+
+repository = 'vocabulary-pages'
+base = 'develop'
+message = "GHC version $version"
+pr.title = 'New ghc version'
+pr.message = "Version $version of the GHC program is now available."
+files = [
+	[
+		file: 'target/dist/ghc',
+		path: 'bin/ghc'
+	],
+	[
+		file: "target/dist/ghc-${version}.jar",
+		path: "bin/ghc-${version}.jar"
+	]
+]
