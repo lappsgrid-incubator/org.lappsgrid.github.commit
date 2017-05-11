@@ -11,7 +11,7 @@
 
     <groupId>org.lappsgrid.github</groupId>
     <artifactId>commit</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <build>
         <finalName>ghc-${project.version}</finalName>
