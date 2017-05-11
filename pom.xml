@@ -19,6 +19,7 @@
             <plugin>
                 <groupId>org.anc.maven.plugins</groupId>
                 <artifactId>anc-maven-plugin</artifactId>
+                <version>1.0.7</version>
                 <configuration>
                     <package>org.lappsgrid.github.commit</package>
                     <srcDir>src/main</srcDir>
