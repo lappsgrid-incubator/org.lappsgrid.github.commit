@@ -5,3 +5,4 @@ target/
 *.iws
 src/main/java/**/Version.java
 VERSION
+*.jar

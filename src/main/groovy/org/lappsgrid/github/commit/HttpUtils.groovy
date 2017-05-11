@@ -1,6 +1,22 @@
+/*
+ * Copyright (C) 2017 The Language Applications Grid
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 package org.lappsgrid.github.commit
 
 import groovy.json.JsonSlurper
+import groovyx.net.http.ApacheHttpBuilder
 import groovyx.net.http.HttpBuilder
 
 /**
@@ -24,7 +40,9 @@ class HttpUtils {
 
     HttpUtils(String uri, String token) {
         parser = new JsonSlurper()
-        http = HttpBuilder.configure {
+//        def factory = { new ApacheHttpBuilder(it) }
+        http = HttpBuilder.configure({ new ApacheHttpBuilder(it) }) {
+
             request.uri = uri
             request.headers.Authorization = "token $token".toString()
         }
@@ -34,6 +52,7 @@ class HttpUtils {
         this.owner = owner
         return this
     }
+
     HttpUtils repo(String repo) {
         this.repo = repo
         return this
@@ -41,6 +60,14 @@ class HttpUtils {
 
     Map post(String path, Map data) {
         return http.post(Map) {
+            request.uri.path = makePath(path)
+            request.contentType = 'application/json'
+            request.body = data
+        }
+    }
+
+    Map patch(String path, Map data) {
+        return http.patch(Map) {
             request.uri.path = makePath(path)
             request.contentType = 'application/json'
             request.body = data

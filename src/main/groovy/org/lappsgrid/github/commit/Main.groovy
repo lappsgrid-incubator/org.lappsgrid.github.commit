@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2017 The Language Applications Grid
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 package org.lappsgrid.github.commit
 
 /**
@@ -7,12 +22,20 @@ class Main {
 
     void run(File file, String token) {
         def config = new ConfigSlurper().parse(file.text)
-        GitHub github = new GitHub(config.owner, config.repository, token)
+        if (!config.repository) {
+            println "The repository was not specified."
+            return
+        }
+        String owner = config.owner ?: 'lapps'
+        GitHub github = new GitHub(owner, config.repository, token)
         String base = config.base ?: 'develop'
         String branch = config.branch ?: 'vocabulary-' + new Date().format('yyyyMMdd-HHmmss')
+        String message = config.message ?: 'New Discriminators after vocabulary build.'
+        String title = config?.pr.title ?: 'Vocabulary update'
+        String body = config?.pr.message ?: 'New vocabulary pages have been generated. Please see http://vocab.lappsgrid.org'
         github.branch(base, branch)
-        github.commit(branch, config.files)
-        github.pullRequest(branch, config.base)
+        github.commit(branch, config.files, message)
+        github.pullRequest(branch, base, title, body)
 
         println "Pull request submitted."
     }
