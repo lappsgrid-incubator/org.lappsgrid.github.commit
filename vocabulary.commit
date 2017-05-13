@@ -17,6 +17,7 @@ files = [
 	],
 	[
 		file: "target/dist/ghc-${version}.jar",
-		path: "bin/ghc-${version}.jar"
+		path: "bin/ghc-${version}.jar",
+		binary: true
 	]
 ]

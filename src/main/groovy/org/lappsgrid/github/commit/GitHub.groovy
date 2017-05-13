@@ -146,8 +146,15 @@ class GitHub {
      */
     Map send(Map commitData) {
         File file = new File(commitData.file)
+        String encoded
+        if (commitData.binary) {
+            encoded = file.bytes.encodeBase64().toString()
+        }
+        else {
+            encoded = file.text.bytes.encodeBase64().toString()
+        }
         Map data = [
-                content: file.text.bytes.encodeBase64().toString(),
+                content: encoded,
                 encoding: 'base64'
         ]
         Map blob = github.post('git/blobs', data)
