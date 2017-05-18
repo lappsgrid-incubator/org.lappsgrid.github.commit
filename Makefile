@@ -40,5 +40,5 @@ commit:
 	@echo "Please set TOKEN to your GitHub API token."
 else
 commit:
-	ghc -f vocabulary.commit -t $TOKEN
+	ghc -f vocabulary.commit -t $(TOKEN)
 endif
