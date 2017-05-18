@@ -59,6 +59,9 @@ class GitHub {
      */
     public Map branch(String base, String name) {
         Map head = github.get('git/refs/heads/' + base)
+        if (head == null || head.object == null) {
+            throw new RuntimeException("Unable to fetch HEAD for ${base}")
+        }
 
         // ref is the branch we want to create.
         // sha is the SHA of the branch we are branching from
